@@ -49,6 +49,31 @@ public class Main {
         return suits.size() == 1;
     }
 
+    static boolean isStraight(HashSet<Card> hand) {
+        HashSet<Card.Rank> ranks = hand.stream()
+                .map(card -> card.rank)
+                .collect(Collectors.toCollection(HashSet<Card.Rank>::new));
+    }
+
+    static boolean isFourOfaKind(HashSet<Card> hand) {
+        HashSet<Card.Rank> ranks = hand.stream()
+                .map(card -> card.rank)
+                .collect(Collectors.toCollection(HashSet<Card.Rank>::new));
+        return ranks.size() == 1;
+    }
+
+    static boolean isThreeOfaKind(HashSet<Card> hand) {
+
+    }
+
+    static boolean isTwoOfaKind(HashSet<Card> hand) {
+
+    }
+
+    static boolean isTwoPairs(HashSet<Card> hand) {
+
+    }
+
     public static void main(String[] args) {
         HashSet<Card> deck = createDeck();
         HashSet<HashSet<Card>> hands = createHands(deck);
