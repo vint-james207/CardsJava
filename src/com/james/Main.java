@@ -1,7 +1,7 @@
 package com.james;
 
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -49,6 +49,12 @@ public class Main {
         return suits.size() == 1;
     }
 
+    static boolean isStraightFlush(HashSet<Card> hand) {
+        ArrayList<Integer> ranks = hand.stream()
+                .map(card -> card.rank.ordinal())
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+    }
+
     static boolean isStraight(HashSet<Card> hand) {
         HashSet<Card.Rank> ranks = hand.stream()
                 .map(card -> card.rank)
@@ -63,14 +69,15 @@ public class Main {
     }
 
     static boolean isThreeOfaKind(HashSet<Card> hand) {
-
-    }
-
-    static boolean isTwoOfaKind(HashSet<Card> hand) {
-
+        ArrayList<Integer> ranks = hand.stream()
+                .map(card -> card.rank.ordinal())
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
     }
 
     static boolean isTwoPairs(HashSet<Card> hand) {
+        ArrayList<Integer> ranks = hand.stream()
+                .map(card -> card.rank.ordinal())
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
 
     }
 
