@@ -1,6 +1,7 @@
 package com.james;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -50,15 +51,25 @@ public class Main {
     }
 
     static boolean isStraightFlush(HashSet<Card> hand) {
-        ArrayList<Integer> ranks = hand.stream()
-                .map(card -> card.rank.ordinal())
-                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        if (isFlush(hand) && isStraight(hand)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     static boolean isStraight(HashSet<Card> hand) {
-        HashSet<Card.Rank> ranks = hand.stream()
-                .map(card -> card.rank)
-                .collect(Collectors.toCollection(HashSet<Card.Rank>::new));
+        ArrayList<Integer> ranks = hand.stream()
+                .map(card -> card.rank.ordinal())
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        ArrayList<Integer> sortedRanks = ranks.stream()
+                .sorted((r1, r2) -> Integer.compare(r1.intValue(), r2.byteValue()))
+                .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        if (sortedRanks.get(0) + 1 == sortedRanks.get(1) && sortedRanks.get(0) + 2 == sortedRanks.get(2) && sortedRanks.get(0) + 3 == sortedRanks.get(3)) {
+            return true;
+        }
+        return false;
     }
 
     static boolean isFourOfaKind(HashSet<Card> hand) {
@@ -72,14 +83,33 @@ public class Main {
         ArrayList<Integer> ranks = hand.stream()
                 .map(card -> card.rank.ordinal())
                 .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        for (int i = 1; i <= 13; i++) {
+            int f = Collections.frequency(ranks, i);
+            if (f == 3) {
+                return true;
+            }
+        }
+        return false;
     }
 
     static boolean isTwoPairs(HashSet<Card> hand) {
         ArrayList<Integer> ranks = hand.stream()
                 .map(card -> card.rank.ordinal())
                 .collect(Collectors.toCollection(ArrayList<Integer>::new));
+        int paircnt = 0;
+        for (int i = 1; i <= 13; i++) {
+            int freq = Collections.frequency(ranks, i);
+            if (freq == 2) {
+                paircnt++;
+            }
+        }
+        if (paircnt == 2) {
+            return true;
+        }
 
+        return false;
     }
+
 
     public static void main(String[] args) {
         HashSet<Card> deck = createDeck();
